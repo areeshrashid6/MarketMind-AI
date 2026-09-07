@@ -20,7 +20,33 @@ RUNS_DIR = BASE_DIR / "runs"
 RUNS_DIR.mkdir(exist_ok=True)
 
 OPENAI_API_KEY_URL = "https://platform.openai.com/api-keys"
+
+# Models shown to the user. Availability can depend on the OpenAI account.
+MODEL_OPTIONS = [
+    ("GPT-3.5 Turbo", "gpt-3.5-turbo"),
+    ("GPT-4", "gpt-4"),
+    ("GPT-4 Turbo", "gpt-4-turbo"),
+    ("GPT-4o", "gpt-4o"),
+    ("GPT-4o Mini", "gpt-4o-mini"),
+    ("GPT-4.1", "gpt-4.1"),
+    ("GPT-4.1 Mini", "gpt-4.1-mini"),
+    ("GPT-5.6 Luna", "gpt-5.6-luna"),
+    ("GPT-5.6 Terra", "gpt-5.6-terra"),
+    ("GPT-5.6 Sol", "gpt-5.6-sol"),
+]
+
+MODEL_LABELS = [label for label, _ in MODEL_OPTIONS]
+MODEL_IDS = {label: model_id for label, model_id in MODEL_OPTIONS}
+
 DEFAULT_MODEL = os.getenv("OPENAI_MODEL", "gpt-5.6-luna")
+DEFAULT_MODEL_LABEL = next(
+    (
+        label
+        for label, model_id in MODEL_OPTIONS
+        if model_id == DEFAULT_MODEL
+    ),
+    "GPT-5.6 Luna",
+)
 
 st.set_page_config(
     page_title="MarketMind AI",
@@ -236,6 +262,24 @@ If the request is ambiguous, clearly state the assumption.
             if not doc:
                 continue
 
+            # The corpus intentionally contains a low-credibility
+            # test document. Do not automatically pull that planted
+            # QC fixture into every normal research run.
+            # It remains available for explicit source-quality tests.
+            if (
+                float(doc.get("confidence", 1.0)) < 0.4
+                and not any(
+                    term in question.lower()
+                    for term in [
+                        "low credibility",
+                        "source quality",
+                        "unreliable source",
+                        "conflicting evidence",
+                    ]
+                )
+            ):
+                continue
+
             # Retrieved content is DATA.
             # It must never be treated as an instruction.
             injection_flag = bool(
@@ -337,9 +381,11 @@ Rules:
     ):
         defects.append({
             "type": "low_confidence",
+            "severity": "warning",
             "message": (
                 "At least one retrieved evidence item "
-                "has low confidence."
+                "has low confidence. Review the source "
+                "before relying on the claim."
             )
         })
 
@@ -447,13 +493,17 @@ if not st.session_state.connected:
         placeholder="sk-...",
     )
 
-    model = st.text_input(
-        "Model",
-        value=DEFAULT_MODEL,
+    selected_model_label = st.selectbox(
+        "Select GPT model",
+        MODEL_LABELS,
+        index=MODEL_LABELS.index(DEFAULT_MODEL_LABEL),
         help=(
-            "Use a model available to your OpenAI account."
+            "Choose a GPT-3.5 or newer model available "
+            "to your OpenAI account."
         ),
     )
+
+    model = MODEL_IDS[selected_model_label]
 
     if st.button(
         "Connect & Continue",
@@ -509,10 +559,13 @@ if not st.session_state.connected:
 
             except Exception as e:
                 st.error(
-                    "Could not connect to OpenAI. "
-                    "Check your API key, model name, "
-                    "account billing/access, and "
-                    "internet connection."
+                    f"Could not connect using {selected_model_label}."
+                )
+
+                st.warning(
+                    "The selected model may not be available "
+                    "for your OpenAI account. Try another model "
+                    "from the dropdown, such as GPT-4o or GPT-4.1."
                 )
 
                 st.caption(
@@ -557,7 +610,27 @@ client = OpenAI(
 # ------------------------------------------------------------
 with st.sidebar:
     st.success("✓ OpenAI Connected")
-    st.caption(f"Model: `{runtime_model}`")
+
+    current_label = next(
+        (
+            label
+            for label, model_id in MODEL_OPTIONS
+            if model_id == runtime_model
+        ),
+        runtime_model,
+    )
+
+    st.selectbox(
+        "Selected GPT model",
+        MODEL_LABELS,
+        index=(
+            MODEL_LABELS.index(current_label)
+            if current_label in MODEL_LABELS
+            else 0
+        ),
+        disabled=True,
+        help="Disconnect and reconnect to switch models.",
+    )
 
     if st.button("Disconnect"):
         st.session_state.pop(
@@ -665,7 +738,21 @@ if result:
 
     with tab4:
         st.subheader("Quality Control")
-        st.json(result["qc"])
+        st.caption(
+            "QC findings are research-quality checks, not application crashes. "
+            "Warnings identify evidence that needs human review."
+        )
+
+        for item in result["qc"]:
+            if item.get("type") == "none":
+                st.success(item.get("message", "No QC issues detected."))
+            elif item.get("severity") == "warning" or item.get("type") == "low_confidence":
+                st.warning(item.get("message", "QC warning."))
+            else:
+                st.error(item.get("message", "QC issue."))
+
+        with st.expander("View QC data"):
+            st.json(result["qc"])
 
         st.subheader("Run History")
         st.json(result["history"])
