@@ -1,5 +1,7 @@
 # MarketMind AI — Simple Streamlit Version
 
+https://github.com/areeshrashid6/MarketMind-AI/edit/main/app.py
+
 This is a compact implementation of the MarketMind AI coursework application.
 
 ## Folder structure
