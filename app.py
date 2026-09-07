@@ -57,23 +57,25 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-.stApp{background:#F8FAFC;color:#0F172A}
-.block-container{max-width:1120px!important;padding-top:1.5rem!important;padding-bottom:3rem!important}
-[data-testid="stHeader"]{background:rgba(248,250,252,.92)}
-html,body,[class*="css"]{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-.mm-header{height:64px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #E2E8F0;margin-bottom:48px}
-.mm-brand{display:flex;align-items:center;gap:11px}.mm-logo{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,#EEF2FF,#FCE7F3);border:1px solid #E2E8F0;font-size:17px}
-.mm-brand-name{font-size:16px;font-weight:700;color:#0F172A;line-height:1.1}.mm-brand-sub{font-size:11px;color:#64748B;margin-top:3px}
-.mm-secure{font-size:11px;color:#64748B;display:flex;align-items:center;gap:7px}.mm-dot{width:7px;height:7px;border-radius:50%;background:#22C55E;box-shadow:0 0 0 3px #DCFCE7}
-.mm-eyebrow{font-size:11px;font-weight:700;letter-spacing:.09em;color:#64748B;margin-bottom:13px}.mm-title{font-size:36px;line-height:1.12;letter-spacing:-.035em;font-weight:700;color:#0F172A;max-width:470px;margin-bottom:16px}.mm-description{font-size:14px;line-height:1.7;color:#64748B;max-width:470px;margin-bottom:28px}
-.mm-feature{display:flex;gap:12px;margin:18px 0}.mm-check{width:25px;height:25px;flex:0 0 25px;border-radius:8px;background:#ECFDF5;color:#059669;display:grid;place-items:center;font-size:12px;font-weight:800}.mm-feature-title{font-size:13px;font-weight:650;color:#0F172A;margin-bottom:3px}.mm-feature-copy{font-size:11px;line-height:1.5;color:#64748B}
-.mm-card{background:#FFF;border:1px solid #E2E8F0;border-radius:18px;padding:30px;box-shadow:0 16px 45px rgba(15,23,42,.06)}.mm-card-icon{width:42px;height:42px;border-radius:12px;background:#F1F5F9;border:1px solid #E2E8F0;display:grid;place-items:center;font-size:19px;margin-bottom:18px}.mm-card-title{font-size:19px;font-weight:700;color:#0F172A;margin-bottom:5px}.mm-card-subtitle{font-size:12px;line-height:1.55;color:#64748B;margin-bottom:23px}
-.mm-label{font-size:12px;font-weight:650;color:#334155;margin:18px 0 7px}.mm-helper{font-size:11px;color:#94A3B8;margin-top:7px}.mm-security{display:flex;align-items:flex-start;gap:8px;padding:12px 13px;border-radius:10px;background:#F8FAFC;border:1px solid #F1F5F9;color:#64748B;font-size:10.5px;line-height:1.5;margin-top:16px}.mm-get-key{margin-top:18px;padding-top:17px;border-top:1px solid #F1F5F9;font-size:11px;color:#64748B}
-div[data-testid="stTextInput"] input,div[data-testid="stSelectbox"] div[data-baseweb="select"]>div{min-height:46px!important;border-radius:10px!important;border:1px solid #CBD5E1!important;background:#FFF!important;color:#0F172A!important;font-size:13px!important}
+.stApp{background:#F7FAFC;color:#11203E}
+.block-container{max-width:1000px!important;padding-top:0!important;padding-bottom:1.25rem!important}
+[data-testid="stHeader"]{background:rgba(247,250,252,.94)}
+html,body,[class*="css"]{font-family:"Avenir Next",Avenir,ui-sans-serif,system-ui,sans-serif}
+.mm-header{height:62px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #DDE6F0;margin-bottom:33px}
+.mm-brand{display:flex;align-items:center;gap:11px}.mm-logo{width:48px;height:38px;display:grid;place-items:center;color:#087D82;font-size:31px;font-weight:900;letter-spacing:-.18em;line-height:1;transform:skew(-8deg)}
+.mm-brand-name{font-size:16px;font-weight:750;color:#12203E;line-height:1.1}.mm-brand-sub{font-size:11px;color:#7283A2;margin-top:3px}
+.mm-header-tools{display:flex;align-items:center;gap:21px}.mm-tool{font-size:11px;color:#1A2948;display:flex;align-items:center;gap:7px}.mm-tool+.mm-tool{border-left:1px solid #E2E8F0;padding-left:21px}.mm-help-icon{width:16px;height:16px;border:1.5px solid #1B2A49;border-radius:50%;display:grid;place-items:center;font-size:10px;font-weight:700}.mm-headphones{font-size:15px}.mm-secure{font-size:11px;color:#1A2948;display:flex;align-items:center;gap:8px}.mm-dot{width:7px;height:7px;border-radius:50%;background:#17B978;box-shadow:0 0 0 4px #E2F8ED}
+.mm-eyebrow{font-size:11px;font-weight:750;letter-spacing:.13em;color:#7182A2;margin:14px 0 16px}.mm-title{font-size:36px;line-height:1.14;letter-spacing:-.035em;font-weight:750;color:#101D3A;max-width:390px;margin-bottom:15px}.mm-description{font-size:14px;line-height:1.6;color:#6C7E9D;max-width:390px;margin-bottom:25px}
+.mm-feature{display:flex;gap:17px;margin:18px 0}.mm-check{width:58px;height:57px;flex:0 0 58px;border-radius:14px;background:#E2F8F1;color:#078C83;display:grid;place-items:center;font-size:29px;font-weight:400}.mm-feature:nth-of-type(2) .mm-check{background:#E8F0FF;color:#267DE8}.mm-feature:nth-of-type(3) .mm-check{background:#F1ECFF;color:#8E4AF3}.mm-feature-title{font-size:14px;font-weight:750;color:#14213F;margin:6px 0 3px}.mm-feature-copy{font-size:12px;line-height:1.45;color:#6C7E9D;max-width:230px}
+.mm-quote{margin-top:23px;background:#F2F6FB;border:1px solid #E7EDF5;border-radius:12px;padding:17px 18px;color:#6C7E9D;font-size:13px;line-height:1.4}.mm-quote-mark{color:#B7C7E2;font-size:28px;font-weight:800;line-height:.5;margin-right:8px}.mm-quote-by{display:block;font-size:10px;margin:8px 0 0 32px;color:#8495B3}
+.mm-card{background:#FFF;border:1px solid #DDE6F0;border-radius:16px;padding:28px 30px 21px;box-shadow:0 14px 38px rgba(24,55,92,.08);margin-top:0}.mm-card-top{display:flex;align-items:center;gap:17px;margin-bottom:21px}.mm-card-icon{width:66px;height:70px;border-radius:13px;background:#E4F9F2;color:#0B5A58;display:grid;place-items:center;font-size:37px}.mm-card-title{font-size:19px;font-weight:750;color:#101D3A;margin-bottom:5px}.mm-card-subtitle{font-size:12px;line-height:1.55;color:#7182A2}.mm-private{margin-left:auto;align-self:flex-start;background:#E5F9F2;color:#087D72;border-radius:14px;padding:6px 11px;font-size:10px;font-weight:700;white-space:nowrap}
+.mm-label{font-size:12px;font-weight:750;color:#1A2948;margin:17px 0 7px}.mm-helper{font-size:11px;color:#7385A4;margin-top:7px}.mm-security{display:flex;align-items:flex-start;gap:8px;padding:10px 0 5px;color:#7182A2;font-size:10.5px;line-height:1.5;margin-top:0}.mm-security-icon{color:#7182A2;font-size:14px}.mm-model-note{display:flex;align-items:center;gap:10px;padding:11px 13px;border-radius:10px;background:#EDF4FF;color:#7182A2;font-size:11px;margin-top:9px}.mm-model-note b{color:#267DE8;font-size:19px}.mm-get-key{display:flex;align-items:center;gap:13px;margin-top:19px;padding:11px 14px;border:1px solid #E5ECF5;border-radius:11px;background:#FAFCFE;font-size:11px;color:#1A2948}.mm-get-key-icon{width:30px;height:30px;border-radius:50%;background:#FFF1E1;color:#F49A26;display:grid;place-items:center;font-size:17px}.mm-get-key a{margin-left:auto;color:#087D72;font-weight:750;text-decoration:none;white-space:nowrap}
+div[data-testid="stTextInput"] input,div[data-testid="stSelectbox"] div[data-baseweb="select"]>div{min-height:42px!important;border-radius:10px!important;border:1px solid #C9D5E5!important;background:#FFF!important;color:#0F172A!important;font-size:13px!important}
 div[data-testid="stTextInput"] input:focus{border-color:#94A3B8!important;box-shadow:0 0 0 3px rgba(148,163,184,.16)!important}
-div[data-testid="stButton"] button[kind="primary"]{min-height:48px;border-radius:10px;font-size:13px;font-weight:650;border:0;background:#0F172A;color:#FFF;box-shadow:0 6px 15px rgba(15,23,42,.12)}
-div[data-testid="stButton"] button[kind="primary"]:hover{background:#1E293B}
-@media(max-width:800px){.block-container{padding-left:20px!important;padding-right:20px!important}.mm-header{margin-bottom:32px}.mm-title{font-size:30px}.mm-card{padding:22px;margin-top:28px}}
+div[data-testid="stButton"] button[kind="primary"]{min-height:48px;border-radius:10px;font-size:13px;font-weight:750;border:0;background:#08736E;color:#FFF;box-shadow:0 6px 15px rgba(8,115,110,.16)}
+div[data-testid="stButton"] button[kind="primary"]:hover{background:#075D59}
+.mm-footer{display:flex;justify-content:space-between;color:#8191AF;font-size:10px;margin-top:29px}.mm-footer-links{word-spacing:12px}
+@media(max-width:800px){.block-container{padding-left:20px!important;padding-right:20px!important}.mm-header{margin-bottom:25px}.mm-header-tools{gap:8px}.mm-tool+.mm-tool{padding-left:8px}.mm-header-tools .mm-help-icon,.mm-header-tools .mm-headphones{display:none}.mm-title{font-size:30px}.mm-card{padding:22px;margin-top:28px}.mm-private{display:none}.mm-footer{display:block}.mm-footer-links{margin-top:8px}}
 </style>
 """,unsafe_allow_html=True)
 
@@ -491,11 +493,15 @@ if not st.session_state.connected:
     st.markdown("""
     <div class="mm-header">
       <div class="mm-brand">
-        <div class="mm-logo">📊</div>
+                <div class="mm-logo">M</div>
         <div><div class="mm-brand-name">MarketMind AI</div>
         <div class="mm-brand-sub">Business Research Agent</div></div>
       </div>
-      <div class="mm-secure"><span class="mm-dot"></span>Secure workspace</div>
+            <div class="mm-header-tools">
+                <div class="mm-secure"><span class="mm-dot"></span>Secure workspace</div>
+                <div class="mm-tool"><span class="mm-help-icon">?</span>Help</div>
+                <div class="mm-tool"><span class="mm-headphones">◉</span>Need support?</div>
+            </div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -509,20 +515,21 @@ if not st.session_state.connected:
         <div class="mm-feature"><div class="mm-check">✓</div><div><div class="mm-feature-title">Autonomous research</div><div class="mm-feature-copy">Plan research tasks and execute them systematically.</div></div></div>
         <div class="mm-feature"><div class="mm-check">✓</div><div><div class="mm-feature-title">Evidence-based analysis</div><div class="mm-feature-copy">Connect findings to supporting evidence and sources.</div></div></div>
         <div class="mm-feature"><div class="mm-check">✓</div><div><div class="mm-feature-title">Decision-ready reports</div><div class="mm-feature-copy">Turn research into structured business insights.</div></div></div>
+        <div class="mm-quote"><span class="mm-quote-mark">“</span>Better research leads to<br>smarter decisions.<span class="mm-quote-by">— MarketMind</span></div>
         """, unsafe_allow_html=True)
 
     with right:
-        st.markdown('<div class="mm-card"><div class="mm-card-icon">✦</div><div class="mm-card-title">Connect OpenAI</div><div class="mm-card-subtitle">Add your API key and choose the model MarketMind should use for research.</div>', unsafe_allow_html=True)
+        st.markdown('<div class="mm-card"><div class="mm-card-top"><div class="mm-card-icon">◎</div><div><div class="mm-card-title">Connect OpenAI</div><div class="mm-card-subtitle">Add your API key to start your MarketMind research workspace.</div></div><div class="mm-private">▣ &nbsp;Private &amp; secure</div></div>', unsafe_allow_html=True)
 
         st.markdown('<div class="mm-label">OpenAI API key</div>', unsafe_allow_html=True)
         entered_key=st.text_input("API key",type="password",placeholder="sk-••••••••••••••••••••",label_visibility="collapsed")
-        st.markdown('<div class="mm-helper">Used only to authenticate your OpenAI requests.</div>',unsafe_allow_html=True)
+        st.markdown('<div class="mm-security"><span class="mm-security-icon">▣</span><span>Your key is used only to authenticate your OpenAI requests.</span></div>',unsafe_allow_html=True)
 
         st.markdown('<div class="mm-label">AI model</div>',unsafe_allow_html=True)
         selected_model_label=st.selectbox("AI model",MODEL_LABELS,index=0,label_visibility="collapsed",help="Choose a GPT model available to your OpenAI account.")
         model=MODEL_IDS[selected_model_label]
         desc={"GPT-3.5 Turbo":"Fast and lightweight option for basic research tasks.","GPT-4":"Higher reasoning quality for demanding research.","GPT-4 Turbo":"Advanced GPT-4 model with a larger context window.","GPT-4o":"Balanced performance for general research and synthesis.","GPT-4o Mini":"Faster, lower-cost option for lightweight research.","GPT-4.1":"Strong reasoning and instruction-following performance.","GPT-4.1 Mini":"Efficient model for everyday research workloads.","GPT-5.6 Luna":"Advanced model for research and synthesis.","GPT-5.6 Terra":"Advanced model with a strong quality/cost balance.","GPT-5.6 Sol":"Frontier model for complex research and synthesis."}
-        st.markdown(f'<div class="mm-helper">{desc.get(selected_model_label,"")}</div>',unsafe_allow_html=True)
+        st.markdown(f'<div class="mm-model-note"><b>ϟ</b><span>{desc.get(selected_model_label,"")}</span></div>',unsafe_allow_html=True)
 
         if st.button("Connect & Continue  →",type="primary",use_container_width=True):
             if not entered_key.strip():
@@ -545,12 +552,12 @@ if not st.session_state.connected:
                     with st.expander("View technical details"):
                         st.code(f"{type(e).__name__}: {e}")
 
-        st.markdown("""<div class="mm-security"><span>🛡</span><span>Your API key is used for authentication and should never be committed to GitHub.</span></div>
-        <div class="mm-get-key">Don’t have an API key? <a href="https://platform.openai.com/api-keys" target="_blank" style="color:#0F172A;font-weight:600;text-decoration:none;">Get one from OpenAI →</a></div>""",unsafe_allow_html=True)
+        st.markdown("""<div class="mm-get-key"><span class="mm-get-key-icon">⚿</span><span>Don’t have an API key?<small style="display:block;color:#7182A2;margin-top:3px;">Get your API key from OpenAI to continue.</small></span><a href="https://platform.openai.com/api-keys" target="_blank">Get an API key&nbsp; ↗</a></div>""",unsafe_allow_html=True)
         with st.expander("Where do I find my API key?"):
             st.markdown("1. Open your OpenAI developer account.\n2. Create an API key.\n3. Paste it into the field above.\n4. Select your model and click **Connect & Continue**.")
         st.markdown('</div>',unsafe_allow_html=True)
 
+    st.markdown('<div class="mm-footer"><span>© 2025 MarketMind AI. All rights reserved.</span><span class="mm-footer-links">Research · Analyze · Decide · Faster</span></div>', unsafe_allow_html=True)
     st.stop()
 
 
