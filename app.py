@@ -730,35 +730,93 @@ if result:
 
     with tab2:
         st.subheader("Evidence")
-        st.json(result["evidence"])
+        st.caption(
+            "Sources and claims used by MarketMind. "
+            "Technical JSON is hidden so the evidence is easier to review."
+        )
+
+        evidence_items = result.get("evidence", [])
+
+        if not evidence_items:
+            st.info("No evidence was retrieved for this research run.")
+        else:
+            for i, item in enumerate(evidence_items, start=1):
+                confidence = float(item.get("confidence", 0) or 0)
+                credibility = float(item.get("credibility", 0) or 0)
+                corroboration = float(item.get("corroboration", 0) or 0)
+
+                st.markdown(f"### Evidence {i} · {item.get('evidence_id', '—')}")
+                st.write(item.get("claim", "No claim provided."))
+
+                c1, c2, c3 = st.columns(3)
+                c1.metric("Confidence", f"{confidence:.0%}")
+                c2.metric("Credibility", f"{credibility:.0%}")
+                c3.metric("Corroboration", f"{corroboration:.0%}")
+
+                st.caption(
+                    f"Source: {item.get('source_detail', 'Unknown source')} "
+                    f"· Reference: {item.get('source_ref', '—')} "
+                    f"· Type: {item.get('claim_type', '—')}"
+                )
+
+                notes = item.get("analyst_notes")
+                if notes:
+                    st.caption(f"Analyst note: {notes}")
+
+                if i < len(evidence_items):
+                    st.divider()
+
+        with st.expander("View technical evidence JSON"):
+            st.json(evidence_items)
 
     with tab3:
         st.subheader("Research Plan")
-        st.markdown(result["plan"])
+        st.caption(
+            "The plan generated before research began."
+        )
+
+        plan_text = result.get("plan", "")
+        if plan_text:
+            st.markdown(plan_text)
+        else:
+            st.info("No research plan is available.")
 
     with tab4:
         st.subheader("Quality Control")
-        st.caption(
-            "QC findings are research-quality checks, not application crashes. "
-            "Warnings identify evidence that needs human review."
-        )
 
-        for item in result["qc"]:
-            if item.get("type") == "none":
-                st.success(item.get("message", "No QC issues detected."))
-            elif item.get("severity") == "warning" or item.get("type") == "low_confidence":
-                st.warning(item.get("message", "QC warning."))
-            else:
-                st.error(item.get("message", "QC issue."))
+        qc_items = result.get("qc", [])
+        real_issues = [x for x in qc_items if x.get("type") != "none"]
 
-        with st.expander("View QC data"):
-            st.json(result["qc"])
+        if not real_issues:
+            st.success(
+                "✓ Quality checks passed. No basic research-quality issues were detected."
+            )
+        else:
+            st.warning(
+                f"{len(real_issues)} research-quality finding(s) need human review."
+            )
 
-        st.subheader("Run History")
-        st.json(result["history"])
+            for item in real_issues:
+                issue_type = item.get("type", "review")
+                message = item.get("message", "QC finding requires review.")
 
-        st.subheader("API Usage")
-        st.json(result["usage"])
+                if item.get("severity") == "warning" or issue_type == "low_confidence":
+                    st.warning(f"⚠ {message}")
+                else:
+                    st.error(f"• {message}")
+
+        with st.expander("View QC details"):
+            st.json(qc_items)
+
+        with st.expander("Technical run details"):
+            st.write("Run History")
+            st.json(result.get("history", []))
+
+            st.write("API Usage")
+            usage = result.get("usage", {})
+            u1, u2 = st.columns(2)
+            u1.metric("Input tokens", usage.get("input_tokens", 0))
+            u2.metric("Output tokens", usage.get("output_tokens", 0))
 
     with tab5:
         st.warning(
