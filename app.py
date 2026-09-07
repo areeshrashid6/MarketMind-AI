@@ -38,14 +38,14 @@ MODEL_OPTIONS = [
 MODEL_LABELS = [label for label, _ in MODEL_OPTIONS]
 MODEL_IDS = {label: model_id for label, model_id in MODEL_OPTIONS}
 
-DEFAULT_MODEL = os.getenv("OPENAI_MODEL", "gpt-3.5-turbo")
+DEFAULT_MODEL = os.getenv("OPENAI_MODEL", "gpt-5.6-luna")
 DEFAULT_MODEL_LABEL = next(
     (
         label
         for label, model_id in MODEL_OPTIONS
         if model_id == DEFAULT_MODEL
     ),
-    "GPT-3.5 Turbo",
+    "GPT-5.6 Luna",
 )
 
 st.set_page_config(
@@ -53,31 +53,6 @@ st.set_page_config(
     page_icon="📊",
     layout="wide",
 )
-
-
-st.markdown("""
-<style>
-.stApp{background:#F7FAFC;color:#11203E}
-.block-container{max-width:1000px!important;padding-top:0!important;padding-bottom:1.25rem!important}
-[data-testid="stHeader"]{background:rgba(247,250,252,.94)}
-html,body,[class*="css"]{font-family:"Avenir Next",Avenir,ui-sans-serif,system-ui,sans-serif}
-.mm-header{height:62px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #C9D5E4;margin-bottom:33px}
-.mm-brand{display:flex;align-items:center;gap:11px}.mm-logo{width:48px;height:38px;display:grid;place-items:center;color:#007A80;font-size:31px;font-weight:900;letter-spacing:-.18em;line-height:1;transform:skew(-8deg)}
-.mm-brand-name{font-size:16px;font-weight:850;color:#06132C;line-height:1.1}.mm-brand-sub{font-size:11px;color:#344B6B;margin-top:3px}
-.mm-header-tools{display:flex;align-items:center;gap:21px}.mm-tool{font-size:11px;color:#06132C;display:flex;align-items:center;gap:7px}.mm-tool+.mm-tool{border-left:1px solid #B8C7D8;padding-left:21px}.mm-help-icon{width:16px;height:16px;border:1.5px solid #06132C;border-radius:50%;display:grid;place-items:center;font-size:10px;font-weight:850}.mm-headphones{font-size:15px;color:#06132C}.mm-secure{font-size:11px;color:#06132C;display:flex;align-items:center;gap:8px}.mm-dot{width:7px;height:7px;border-radius:50%;background:#07945F;box-shadow:0 0 0 4px #C5EFDD}
-.mm-eyebrow{font-size:11px;font-weight:800;letter-spacing:.13em;color:#415777;margin:14px 0 16px}.mm-title{font-size:36px;line-height:1.14;letter-spacing:-.035em;font-weight:800;color:#071633;max-width:390px;margin-bottom:15px}.mm-description{font-size:14px;line-height:1.6;color:#415B80;max-width:390px;margin-bottom:25px}
-.mm-feature{display:flex;gap:17px;margin:18px 0}.mm-check{width:58px;height:57px;flex:0 0 58px;border-radius:14px;background:#D8F5EA;color:#007A70;display:grid;place-items:center;font-size:29px;font-weight:500}.mm-feature:nth-of-type(2) .mm-check{background:#DDEAFF;color:#146BE0}.mm-feature:nth-of-type(3) .mm-check{background:#E9E0FF;color:#7136D9}.mm-feature-title{font-size:14px;font-weight:800;color:#071633;margin:6px 0 3px}.mm-feature-copy{font-size:12px;line-height:1.45;color:#415B80;max-width:230px}
-.mm-quote{margin-top:23px;background:#EDF3FA;border:1px solid #D5E0EC;border-radius:12px;padding:17px 18px;color:#415B80;font-size:13px;line-height:1.4}.mm-quote-mark{color:#91A9C8;font-size:28px;font-weight:800;line-height:.5;margin-right:8px}.mm-quote-by{display:block;font-size:10px;margin:8px 0 0 32px;color:#526B8D}
-.mm-card{background:#FFF;border:1px solid #DDE6F0;border-radius:16px;padding:28px 30px 21px;box-shadow:0 14px 38px rgba(24,55,92,.08);margin-top:0}.mm-card-top{display:flex;align-items:center;gap:17px;margin-bottom:21px}.mm-card-icon{width:66px;height:70px;border-radius:13px;background:#E4F9F2;color:#0B5A58;display:grid;place-items:center;font-size:37px}.mm-card-title{font-size:19px;font-weight:750;color:#101D3A;margin-bottom:5px}.mm-card-subtitle{font-size:12px;line-height:1.55;color:#7182A2}.mm-private{margin-left:auto;align-self:flex-start;background:#E5F9F2;color:#087D72;border-radius:14px;padding:6px 11px;font-size:10px;font-weight:700;white-space:nowrap}
-.mm-label{font-size:12px;font-weight:750;color:#1A2948;margin:17px 0 7px}.mm-helper{font-size:11px;color:#7385A4;margin-top:7px}.mm-security{display:flex;align-items:flex-start;gap:8px;padding:10px 0 5px;color:#7182A2;font-size:10.5px;line-height:1.5;margin-top:0}.mm-security-icon{color:#7182A2;font-size:14px}.mm-model-note{display:flex;align-items:center;gap:10px;padding:11px 13px;border-radius:10px;background:#EDF4FF;color:#7182A2;font-size:11px;margin-top:9px}.mm-model-note b{color:#267DE8;font-size:19px}.mm-get-key{display:flex;align-items:center;gap:13px;margin-top:19px;padding:11px 14px;border:1px solid #E5ECF5;border-radius:11px;background:#FAFCFE;font-size:11px;color:#1A2948}.mm-get-key-icon{width:30px;height:30px;border-radius:50%;background:#FFF1E1;color:#F49A26;display:grid;place-items:center;font-size:17px}.mm-get-key a{margin-left:auto;color:#087D72;font-weight:750;text-decoration:none;white-space:nowrap}
-div[data-testid="stTextInput"] input,div[data-testid="stSelectbox"] div[data-baseweb="select"]>div{min-height:42px!important;border-radius:10px!important;border:1px solid #C9D5E5!important;background:#FFF!important;color:#0F172A!important;font-size:13px!important}
-div[data-testid="stTextInput"] input:focus{border-color:#94A3B8!important;box-shadow:0 0 0 3px rgba(148,163,184,.16)!important}
-div[data-testid="stButton"] button[kind="primary"]{min-height:48px;border-radius:10px;font-size:13px;font-weight:750;border:0;background:#08736E;color:#FFF;box-shadow:0 6px 15px rgba(8,115,110,.16)}
-div[data-testid="stButton"] button[kind="primary"]:hover{background:#075D59}
-.mm-footer{display:flex;justify-content:space-between;color:#526B8D;font-size:10px;margin-top:29px}.mm-footer-links{word-spacing:12px}
-@media(max-width:800px){.block-container{padding-left:20px!important;padding-right:20px!important}.mm-header{margin-bottom:25px}.mm-header-tools{gap:8px}.mm-tool+.mm-tool{padding-left:8px}.mm-header-tools .mm-help-icon,.mm-header-tools .mm-headphones{display:none}.mm-title{font-size:30px}.mm-card{padding:22px;margin-top:28px}.mm-private{display:none}.mm-footer{display:block}.mm-footer-links{margin-top:8px}}
-</style>
-""",unsafe_allow_html=True)
 
 
 # ============================================================
@@ -490,74 +465,122 @@ if saved_key and not st.session_state.get("runtime_model"):
 # ============================================================
 if not st.session_state.connected:
 
-    st.markdown("""
-    <div class="mm-header">
-      <div class="mm-brand">
-                <div class="mm-logo">M</div>
-        <div><div class="mm-brand-name">MarketMind AI</div>
-        <div class="mm-brand-sub">Business Research Agent</div></div>
-      </div>
-            <div class="mm-header-tools">
-                <div class="mm-secure"><span class="mm-dot"></span>Secure workspace</div>
-                <div class="mm-tool"><span class="mm-help-icon">?</span>Help</div>
-                <div class="mm-tool"><span class="mm-headphones">◉</span>Need support?</div>
-            </div>
-    </div>
-    """, unsafe_allow_html=True)
+    st.title("📊 MarketMind AI")
+    st.subheader("Connect your OpenAI API key")
 
-    left, right = st.columns([0.88, 1.12], gap="large")
+    st.write(
+        "MarketMind needs an OpenAI API key before it "
+        "can perform research."
+    )
 
-    with left:
-        st.markdown('<div class="mm-eyebrow">SETUP YOUR WORKSPACE</div>', unsafe_allow_html=True)
-        st.markdown('<div class="mm-title">Connect your AI research engine</div>', unsafe_allow_html=True)
-        st.markdown('<div class="mm-description">Connect an OpenAI model to power MarketMind’s autonomous research, analysis, evidence synthesis, and reporting.</div>', unsafe_allow_html=True)
-        st.markdown("""
-        <div class="mm-feature"><div class="mm-check">✓</div><div><div class="mm-feature-title">Autonomous research</div><div class="mm-feature-copy">Plan research tasks and execute them systematically.</div></div></div>
-        <div class="mm-feature"><div class="mm-check">✓</div><div><div class="mm-feature-title">Evidence-based analysis</div><div class="mm-feature-copy">Connect findings to supporting evidence and sources.</div></div></div>
-        <div class="mm-feature"><div class="mm-check">✓</div><div><div class="mm-feature-title">Decision-ready reports</div><div class="mm-feature-copy">Turn research into structured business insights.</div></div></div>
-        <div class="mm-quote"><span class="mm-quote-mark">“</span>Better research leads to<br>smarter decisions.<span class="mm-quote-by">— MarketMind</span></div>
-        """, unsafe_allow_html=True)
+    st.info(
+        "Already have an API key? Enter it below. "
+        "If you do not have one, create an API key "
+        "on the OpenAI platform."
+    )
 
-    with right:
-        st.markdown('<div class="mm-card"><div class="mm-card-top"><div class="mm-card-icon">◎</div><div><div class="mm-card-title">Connect OpenAI</div><div class="mm-card-subtitle">Add your API key to start your MarketMind research workspace.</div></div><div class="mm-private">▣ &nbsp;Private &amp; secure</div></div>', unsafe_allow_html=True)
+    st.link_button(
+        "🔑 Get an OpenAI API Key",
+        OPENAI_API_KEY_URL,
+        use_container_width=True,
+    )
 
-        st.markdown('<div class="mm-label">OpenAI API key</div>', unsafe_allow_html=True)
-        entered_key=st.text_input("API key",type="password",placeholder="sk-••••••••••••••••••••",label_visibility="collapsed")
-        st.markdown('<div class="mm-security"><span class="mm-security-icon">▣</span><span>Your key is used only to authenticate your OpenAI requests.</span></div>',unsafe_allow_html=True)
+    st.divider()
 
-        st.markdown('<div class="mm-label">AI model</div>',unsafe_allow_html=True)
-        selected_model_label=st.selectbox("AI model",MODEL_LABELS,index=0,label_visibility="collapsed",help="Choose a GPT model available to your OpenAI account.")
-        model=MODEL_IDS[selected_model_label]
-        desc={"GPT-3.5 Turbo":"Fast and lightweight option for basic research tasks.","GPT-4":"Higher reasoning quality for demanding research.","GPT-4 Turbo":"Advanced GPT-4 model with a larger context window.","GPT-4o":"Balanced performance for general research and synthesis.","GPT-4o Mini":"Faster, lower-cost option for lightweight research.","GPT-4.1":"Strong reasoning and instruction-following performance.","GPT-4.1 Mini":"Efficient model for everyday research workloads.","GPT-5.6 Luna":"Advanced model for research and synthesis.","GPT-5.6 Terra":"Advanced model with a strong quality/cost balance.","GPT-5.6 Sol":"Frontier model for complex research and synthesis."}
-        st.markdown(f'<div class="mm-model-note"><b>ϟ</b><span>{desc.get(selected_model_label,"")}</span></div>',unsafe_allow_html=True)
+    entered_key = st.text_input(
+        "OpenAI API Key",
+        type="password",
+        placeholder="sk-...",
+    )
 
-        if st.button("Connect & Continue  →",type="primary",use_container_width=True):
-            if not entered_key.strip():
-                st.error("Please enter an OpenAI API key.")
-            else:
-                try:
-                    test_client=OpenAI(api_key=entered_key.strip(),timeout=60)
-                    with st.spinner("Connecting to OpenAI..."):
-                        response=test_client.responses.create(model=model.strip(),input="Reply with exactly: CONNECTED",timeout=60)
-                    text=getattr(response,"output_text","").strip()
-                    if not text:
-                        st.error("OpenAI connected but returned an empty response.")
-                    else:
-                        st.session_state.runtime_api_key=entered_key.strip()
-                        st.session_state.runtime_model=model.strip()
-                        st.session_state.connected=True
-                        st.rerun()
-                except Exception as e:
-                    st.error(f"Could not connect using {selected_model_label}.")
-                    with st.expander("View technical details"):
-                        st.code(f"{type(e).__name__}: {e}")
+    selected_model_label = st.selectbox(
+        "Select GPT model",
+        MODEL_LABELS,
+        index=MODEL_LABELS.index(DEFAULT_MODEL_LABEL),
+        help=(
+            "Choose a GPT-3.5 or newer model available "
+            "to your OpenAI account."
+        ),
+    )
 
-        st.markdown("""<div class="mm-get-key"><span class="mm-get-key-icon">⚿</span><span>Don’t have an API key?<small style="display:block;color:#7182A2;margin-top:3px;">Get your API key from OpenAI to continue.</small></span><a href="https://platform.openai.com/api-keys" target="_blank">Get an API key&nbsp; ↗</a></div>""",unsafe_allow_html=True)
-        with st.expander("Where do I find my API key?"):
-            st.markdown("1. Open your OpenAI developer account.\n2. Create an API key.\n3. Paste it into the field above.\n4. Select your model and click **Connect & Continue**.")
-        st.markdown('</div>',unsafe_allow_html=True)
+    model = MODEL_IDS[selected_model_label]
 
-    st.markdown('<div class="mm-footer"><span>© 2025 MarketMind AI. All rights reserved.</span><span class="mm-footer-links">Research · Analyze · Decide · Faster</span></div>', unsafe_allow_html=True)
+    if st.button(
+        "Connect & Continue",
+        type="primary",
+        use_container_width=True,
+    ):
+        if not entered_key.strip():
+            st.error(
+                "Please enter an OpenAI API key."
+            )
+        else:
+            try:
+                test_client = OpenAI(
+                    api_key=entered_key.strip(),
+                    timeout=60,
+                )
+
+                with st.spinner(
+                    "Connecting to OpenAI..."
+                ):
+                    response = test_client.responses.create(
+                        model=model.strip(),
+                        input="Reply with exactly: CONNECTED",
+                        timeout=60,
+                    )
+
+                text = getattr(
+                    response,
+                    "output_text",
+                    ""
+                ).strip()
+
+                if not text:
+                    st.error(
+                        "OpenAI connected but returned "
+                        "an empty response."
+                    )
+                else:
+                    st.session_state.runtime_api_key = (
+                        entered_key.strip()
+                    )
+                    st.session_state.runtime_model = (
+                        model.strip()
+                    )
+                    st.session_state.connected = True
+
+                    st.success(
+                        "OpenAI connected successfully."
+                    )
+
+                    # Immediately move to Page 2.
+                    st.rerun()
+
+            except Exception as e:
+                st.error(
+                    f"Could not connect using {selected_model_label}."
+                )
+
+                st.warning(
+                    "The selected model may not be available "
+                    "for your OpenAI account. Try another model "
+                    "from the dropdown, such as GPT-4o or GPT-4.1."
+                )
+
+                st.caption(
+                    f"Technical error: "
+                    f"{type(e).__name__}: {e}"
+                )
+
+    st.caption(
+        "Security: never commit your API key to GitHub. "
+        "For Streamlit Cloud, use App Settings → Secrets."
+    )
+
+    # STOP HERE.
+    # This prevents the research page from appearing
+    # underneath the connection page.
     st.stop()
 
 
