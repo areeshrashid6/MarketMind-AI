@@ -1,6 +1,6 @@
 # MarketMind AI — Simple Streamlit Version
 
-https://github.com/areeshrashid6/MarketMind-AI/edit/main/app.py
+https://marketmind-ai-kcgwgnaxwxkhwvespm2cjp.streamlit.app/
 
 This is a compact implementation of the MarketMind AI coursework application.
 
